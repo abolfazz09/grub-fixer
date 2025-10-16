@@ -16,15 +16,16 @@ fi
 
 echo "are you using a live linux?(yes/no)"
 read ANSWER
-if [ "$ANSER" == yes ]; then
+if [ "$ANSWER" = *yes* ]; then
     echo "Great! script will continue"
-elif [ "$ANSWER" == no ]; then
+elif [ "$ANSWER" = *no* ]; then
     echo "usuing only the GRUB installer only..."
     bash ./scripts/grub-installer.sh
     exit 1
 else
     echo "wrong answer, try again"
     exit 1
+fi
 #chrooting into partition
 echo "Prepare to chroot into the partition..."
 bash ./scripts/chrooter.sh
