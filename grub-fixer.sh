@@ -16,9 +16,9 @@ fi
 
 echo "are you using a live linux?(yes/no)"
 read ANSWER
-if [ "$ANSWER" = *yes* ]; then
+if [ "$ANSWER" = "yes" ]; then
     echo "Great! script will continue"
-elif [ "$ANSWER" = *no* ]; then
+elif [ "$ANSWER" = *"no" ]; then
     echo "usuing only the GRUB installer only..."
     bash ./scripts/grub-installer.sh
     exit 1
