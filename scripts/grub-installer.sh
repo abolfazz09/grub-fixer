@@ -19,13 +19,13 @@ OS_INFO="/etc/os-release"
 if [ -f "$OS_INFO" ]; then
     . "$OS_INFO"
         if [[ "$ID_LIKE" == *debian* ]]; then
-            apt install grub-efi
-            grub-install --target=grubx86_64-efi --efi-directory=/boot/efi --bootloader-id=$ID_LIKE
+            apt install grub-efi -y
+            grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="$ID"
             if [ $? -eq 0 ]; then
                 echo "GRUB installed successfully!"
                 update-grub
             else
-                grub-install --target=grubx86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id=$ID_LIKE
+                grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id="$ID"
                 if [ $? -eq 0 ]; then
                     echo "GRUB installed successfully!"
                     update-grub
@@ -34,27 +34,29 @@ if [ -f "$OS_INFO" ]; then
                 fi
             fi
         elif [[ "$ID_LIKE" == *arch* ]]; then
-            pacman -S grub --needed
-            grub-install --target=grubx86_64-efi --efi-directory=/boot/efi --bootloader-id=$ID_LIKE
+            pacman -S grub --needed --noconfirm
+            grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="$ID"
             if [ $? -eq 0 ]; then
                 echo "GRUB installed successfully!"
                 grub-mkconfig -o /boot/grub/grub.cfg
             else
-                grub-install --target=grubx86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id=$ID_LIKE
+                grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id="$ID"
                 if [ $? -eq 0 ]; then
                     echo "GRUB installed successfully!"
                     grub-mkconfig -o /boot/grub/grub.cfg
                 else
                     echo "cannot install grub, try again"
+                fi
+            fi
 
         elif [[ "$ID_LIKE" == *fedora* ]]; then
-            dnf install grub2-efi grub2-efi-modules shim
-            grub2-install --target=grubx86_64-efi --efi-directory=/boot/efi --bootloader-id=$ID_LIKE
+            dnf install grub2-efi grub2-efi-modules shim -y
+            grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="$ID"
             if [ $? -eq 0 ]; then
                 echo "GRUB installed successfully!"
                 grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg || grub2-mkconfig -o /boot/grub2/grub.cfg
             else
-                grub-install --target=grubx86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id=$ID_LIKE
+                grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id="$ID"
                 if [ $? -eq 0 ]; then
                     echo "GRUB installed successfully!"
                     grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg || grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -67,7 +69,6 @@ if [ -f "$OS_INFO" ]; then
             exit 1
         fi
 fi
-done
 
 
 
