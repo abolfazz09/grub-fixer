@@ -1,0 +1,4 @@
+to run "grub-fixer" , at first clone the git using git repository
+run "git clone https://github.com/abolfazz09/grub-fixer.git"
+then "cd grub-fixer"
+then "sudo bash ./grub-fixer.sh"
