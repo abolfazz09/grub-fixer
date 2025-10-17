@@ -4,14 +4,15 @@
 #this script only works on UEFI systems
 #created by Abolfaz09
 #use this script if you're usuing a live-linux
-#checking /mnt
-if mount | grep -q "/mnt"; then
-    umount -R "/mnt"
-    if [ $? -ne 0 ]; then
-        echo "(/mnt) is mounted, please unmount it and try again"
-        exit 1
-fi
 
+
+#checking /mnt
+if mountpoint -q /mnt; then
+    umount -R /mnt
+    if [ $? -ne 0 ]; then
+        echo "'/mnt' is mounted! unmount it and try again!"
+    fi
+fi   
 
 #mounting the Linux root parition
 lsblk
@@ -20,7 +21,7 @@ echo "(example: /dev/nvme0n1p4): "
 read TARGET
 mount $TARGET /mnt
 TEST="/mnt/etc/fstab"
-if [ -f "$TARGET" ]; then
+if [ -f "$TEST" ]; then
     echo "a Linux system found on $TARGET"
 else
     echo "this partition doesn't have any installed Linux"
