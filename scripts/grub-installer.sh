@@ -8,6 +8,7 @@
 
 #mounting EFI partition
 echo "finding EFI partition"
+lsblk
 echo "enter your EFI partition name [be carefull while Entering...](example: /dev/nvme0n1p1): "
 read EFI
 mount $EFI /mnt

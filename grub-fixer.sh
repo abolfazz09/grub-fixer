@@ -19,7 +19,7 @@ read ANSWER
 if [ "$ANSWER" = "yes" ]; then
     echo "Great! script will continue"
 elif [ "$ANSWER" = "no" ]; then
-    echo "usuing only the GRUB installer only..."
+    echo "usuing the GRUB installer only..."
     bash ./scripts/grub-installer.sh
     exit 1
 else
@@ -30,7 +30,7 @@ fi
 echo "Prepare to chroot into the partition..."
 bash ./scripts/chrooter.sh
 if [ $? -ne 0 ]; then
-    echo "failed to chroot, please try again."
+    echo "failed to prepare, please try again."
     exit 1
 fi
 

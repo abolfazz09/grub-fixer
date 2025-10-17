@@ -14,6 +14,7 @@ fi
 
 
 #mounting the Linux root parition
+lsblk
 echo "Enter your Linux partiton full-name(enter carefully)"
 echo "(example: /dev/nvme0n1p4): "
 read TARGET
