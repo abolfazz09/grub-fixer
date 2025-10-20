@@ -8,29 +8,39 @@
 
 #checking root access
 if [ "$EUID" -ne 0 ]; then
-    echo "permission denied! use 'sudo' to use the script"
+    echo "Permission denied! Use 'sudo' to use the script."
     exit 1
 fi
 
 #checking live-linux or not
 
-echo "are you using a live linux?(yes/no)"
+echo "Are you using a live Linux?(yes/no)"
 read ANSWER
 if [ "$ANSWER" = "yes" ]; then
-    echo "Great! script will continue"
+    echo "Great! Script will continue"
 elif [ "$ANSWER" = "no" ]; then
-    echo "usuing the GRUB installer only..."
+    echo "Using the GRUB installer only..."
+    if [ ! -f ./scripts/grub-installer.sh ]; then
+        echo "grub-installer.sh not found!"
+        exit 1
+    fi
+
     bash ./scripts/grub-installer.sh
-    exit 1
+    exit 0
 else
-    echo "wrong answer, try again"
+    echo "Wrong answer, try again"
     exit 1
 fi
 #chrooting into partition
 echo "Prepare to chroot into the partition..."
+if [ ! -f ./scripts/chrooter.sh ]; then
+    echo "chrooter.sh not found!"
+    exit 1
+fi
+
 bash ./scripts/chrooter.sh
 if [ $? -ne 0 ]; then
-    echo "failed to prepare, please try again."
+    echo "Failed to prepare, Please try again."
     exit 1
 fi
 
